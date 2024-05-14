@@ -5,4 +5,5 @@
     android:textSize="40sp"
     android:gravity="start"
     android:padding="20dp"
+    android:hint="Food item"
     android:id="@+id/nameTextView"/>
