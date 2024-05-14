@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CalorieCounter</string>
+    <string name="calories" />
+    <string name="dailyCaloriesVal">DAILY_CALORIES\n</string>
+</resources>
