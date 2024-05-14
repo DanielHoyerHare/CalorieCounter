@@ -12,40 +12,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Current weight (kg)"
-        android:textSize="40sp"/>
+        android:textSize="25sp"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Fx: 80"
-        android:textSize="40sp"
+        android:textSize="25sp"
         android:id="@+id/input_weight"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Current height (cm)"
-        android:textSize="40sp"/>
+        android:textSize="25sp"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Fx: 180"
-        android:textSize="40sp"
+        android:textSize="25sp"
         android:id="@+id/input_height"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Current age"
-        android:textSize="40sp"/>
+        android:textSize="25sp"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Fx: 20"
-        android:textSize="40sp"
+        android:textSize="25sp"
         android:id="@+id/input_age"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Goal"
-        android:textSize="40sp"/>
+        android:textSize="25sp"/>
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,26 +55,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Loose weight"
-            android:textSize="40sp"
+            android:textSize="25sp"
             android:id="@+id/goal_loss"/>
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Maintain weight"
-            android:textSize="40sp"
+            android:textSize="25sp"
             android:id="@+id/goal_main"/>
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Gain weight"
-            android:textSize="40sp"
+            android:textSize="25sp"
             android:id="@+id/goal_gain"/>
     </RadioGroup>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Activity level"
-        android:textSize="40sp"/>
+        android:textSize="25sp"/>
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -84,5 +84,5 @@
         android:layout_height="wrap_content"
         android:text="Submit"
         android:id="@+id/settings_submit"
-        android:textSize="40sp"/>
+        android:textSize="25sp"/>
 </LinearLayout>

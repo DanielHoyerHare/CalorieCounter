@@ -2,11 +2,18 @@ package tec.calories.app.Api;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import tec.calories.app.models.Food;
 
 public class ApiManager {
@@ -15,31 +22,33 @@ public class ApiManager {
 
 
     public List<Food> getItems(){
-        ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
+        String URL = "http://100.70.102.13:8080/Food";
 
-        // Call the method to get data
-        Call<List<Food>> call = apiService.getData();
+        Request request = new Request.Builder().url(URL).get().build();
+        OkHttpClient client = new OkHttpClient();
 
-        call.enqueue(new Callback<List<Food>>() {
+        Call newcall = client.newCall(request);
+
+        newcall.enqueue(new Callback() {
             @Override
-            public void onResponse(Call<List<Food>> call, Response<List<Food>> response) {
-                if (response.isSuccessful()) {
-                    // Handle successful response
-                    data = response.body();
-                    // Do something with the data
-                    Log.d("ApiKald123123", String.valueOf(data.get(0).getName()));
-                } else {
-                    // Handle error response
-                    Log.e("API", "Error: " + response.code());
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200){
+                    String responseData = response.body().string();
+                    Gson gson = new Gson();
+                    Type foodListType = new TypeToken<List<Food>>(){}.getType();
+                    data = gson.fromJson(responseData, foodListType);
+                    for (Food food : data) {
+                        System.out.println("APIIIKALD Food: " + food.getName());
+                    }
                 }
             }
-
-            @Override
-            public void onFailure(Call<List<Food>> call, Throwable t) {
-
-            }
         });
-        //Log.d("APIKAAALD",data.get(0).name);
         return data;
+
     }
 }
