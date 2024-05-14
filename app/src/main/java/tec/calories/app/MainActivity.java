@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void redirectToCaloriePage(int calorieGoal){
         Intent caloriePage = new Intent(this, CalorieTracker.class);
-        caloriePage.putExtra("getString(R.string.dailyCaloriesVal)", calorieGoal);
+        caloriePage.putExtra(getString(R.string.dailyCaloriesVal), calorieGoal);
         startActivity(caloriePage);
     }
 }
