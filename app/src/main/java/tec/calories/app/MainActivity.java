@@ -3,6 +3,7 @@ package tec.calories.app;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -24,6 +26,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import tec.calories.app.models.Activity_level;
 
@@ -46,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         Integer calorieGoal = sharedPref.getInt(getString(R.string.calories),0);
         if (calorieGoal != 0) redirectToCaloriePage(calorieGoal);
+
+        String countryCode = Locale.getDefault().getDisplayCountry();
+        TextView country = findViewById(R.id.country);
+        country.setText(countryCode);
 
         // Initialiser komponenter i app
         weight = findViewById(R.id.input_weight);
