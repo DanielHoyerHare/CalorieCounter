@@ -2,22 +2,43 @@ package tec.calories.app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import tec.calories.app.Api.ApiManager;
 import tec.calories.app.models.Food;
+import tec.calories.app.models.NutritionItem;
 
 public class CalorieTracker extends AppCompatActivity {
-    Food f;
-    private String URL = "http://192.168.0.200:8080/Food/1";
+    Food f = new Food();
+
+    List<Food> foodList;
+    String URL = "http://100.70.102.13:8080/Food";
+
+    ArrayList<NutritionItem> nutritionItemArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,26 +48,65 @@ public class CalorieTracker extends AppCompatActivity {
         int dailyCalories = caloriePage.getIntExtra(getString(R.string.dailyCaloriesVal), 0);
 
 //        TextView test = findViewById(R.id.test);
+        String URL = "http://100.70.102.13:8080/Food";
 
-        getFoods();
-    }
+        okhttp3.Request request = new Request.Builder().url(URL).get().build();
+        OkHttpClient client = new OkHttpClient();
 
-    public void getFoods() {
-        RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest request = new StringRequest(Request.Method.GET, "http://192.168.0.200:8080/Food/1", new Response.Listener<String>() {
+        Call newcall = client.newCall(request);
+
+        Spinner spinner = findViewById(R.id.foodList);
+
+        newcall.enqueue(new Callback() {
             @Override
-            public void onResponse(String s) {
-                f = new Gson().fromJson(s, Food.class);
-//                TextView test = findViewById(R.id.test);
-//                test.setText(f.getName());
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
+            public void onFailure(Call call, IOException e) {
 
             }
-        }
-        );
-        queue.add(request);
-    }
-}
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200){
+                    String responseData = response.body().string();
+                    Gson gson = new Gson();
+                    Type foodListType = new TypeToken<List<Food>>(){}.getType();
+
+
+                    foodList = gson.fromJson(responseData, foodListType);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Create a custom ArrayAdapter to display only the names
+                            ArrayAdapter<Food> adapter = new ArrayAdapter<Food>(CalorieTracker.this, android.R.layout.simple_spinner_item, foodList) {
+                                @Override
+                                public View getView(int position, View convertView, ViewGroup parent) {
+                                    View view = super.getView(position, convertView, parent);
+                                    // Set the text of the spinner item to the name of the food item
+                                    TextView textView = view.findViewById(android.R.id.text1);
+                                    textView.setText(foodList.get(position).getName());
+                                    return view;
+                                }
+
+                                @Override
+                                public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                                    View view = super.getDropDownView(position, convertView, parent);
+                                    // Set the text of the dropdown item to the name of the food item
+                                    TextView textView = view.findViewById(android.R.id.text1);
+                                    textView.setText(foodList.get(position).getName());
+                                    return view;
+                                }
+                            };
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinner.setAdapter(adapter);
+                        }
+                    });
+
+
+                }
+            }
+        });
+
+
+
+
+}}

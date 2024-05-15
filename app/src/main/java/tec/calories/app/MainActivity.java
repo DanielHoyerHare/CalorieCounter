@@ -58,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
         weight = findViewById(R.id.input_weight);
         height = findViewById(R.id.input_height);
         age = findViewById(R.id.input_age);
-
         goal = findViewById(R.id.goal);
-
         activitySpinner = findViewById(R.id.activity_spinner);
+
+
         activityLevels = fetchActivityLevels(); // Metode til at hente aktivitetsniveauer
 
         spinnerAdapter = new ActivitySpinnerAdapter(this, activityLevels);
