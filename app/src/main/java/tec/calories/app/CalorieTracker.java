@@ -35,9 +35,6 @@ public class CalorieTracker extends AppCompatActivity {
     Food f = new Food();
 
     List<Food> foodList;
-    String URL = "http://192.168.0.79:8080/Food";
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
