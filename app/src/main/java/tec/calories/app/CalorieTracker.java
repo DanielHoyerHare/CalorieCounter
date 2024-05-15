@@ -30,15 +30,14 @@ import okhttp3.Request;
 import okhttp3.Response;
 import tec.calories.app.Api.ApiManager;
 import tec.calories.app.models.Food;
-import tec.calories.app.models.NutritionItem;
 
 public class CalorieTracker extends AppCompatActivity {
     Food f = new Food();
 
     List<Food> foodList;
-    String URL = "http://100.70.102.13:8080/Food";
+    String URL = "http://192.168.0.79:8080/Food";
 
-    ArrayList<NutritionItem> nutritionItemArrayList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +45,11 @@ public class CalorieTracker extends AppCompatActivity {
         setContentView(R.layout.activity_calorietracker);
         Intent caloriePage = getIntent();
         int dailyCalories = caloriePage.getIntExtra(getString(R.string.dailyCaloriesVal), 0);
+        TextView dailyCaloriesTxt = findViewById(R.id.dailyCaloriesTxt);
+        dailyCaloriesTxt.setText("Daily Calories: " + String.valueOf(dailyCalories));
 
 //        TextView test = findViewById(R.id.test);
-        String URL = "http://100.70.102.13:8080/Food";
+        String URL = "http://192.168.0.79:8080/Food";
 
         okhttp3.Request request = new Request.Builder().url(URL).get().build();
         OkHttpClient client = new OkHttpClient();
